@@ -1,7 +1,7 @@
 {
-  "name": "your-game-api",
+  "name": "Tile-Quest-Match-and_Learn-Puzzle-Challenge-api",
   "version": "1.0.0",
-  "description": "CHANGE_ME - one sentence about your game (CS 313 Software Engineering 1)",
+  "description": "Tile Quest Match and Learn Puzzle Challenge is an educational game where players match the required tiles, complete puzzles, and answer quizzes to pass and each level. Players earn points and advance to higher levels while improving their memory, focus, and knowledge.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -19,7 +19,7 @@
   "engines": {
     "node": ">=22"
   },
-  "author": "CHANGE_ME - your full name",
+  "author": "Gian Carlo D. Erivera",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^18.0.7",
