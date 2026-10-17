@@ -31,9 +31,16 @@ const { sequelize } = require('../models');
 
 async function findFinishedGamePlayers(since) {
   const sql = `
-    SELECT NULL AS session_code
+    SELECT CAST(NULL AS text)        AS session_code,
+           CAST(NULL AS timestamptz) AS started_at,
+           CAST(NULL AS timestamptz) AS ended_at,
+           CAST(NULL AS text)        AS school_id,
+           CAST(NULL AS text)        AS nickname,
+           CAST(NULL AS integer)     AS score,
+           CAST(NULL AS boolean)     AS completed
      WHERE FALSE
-  `; // <- replace this placeholder with your query
+       AND (CAST(:since AS timestamptz) IS NULL OR TRUE)
+  `;
 
   return sequelize.query(sql, {
     type: QueryTypes.SELECT,
