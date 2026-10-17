@@ -20,8 +20,8 @@ This is my own build of my group's game concept. Every commit in this repository
 ## Setup
 
 ```
-git clone [repository-url]
-cd [folder-name]
+git clone https://github.com/giancarloerivera-boot/Tile-Quest-Match-and-Learn-Puzzle-Challenge-api.git
+cd Tile-Quest-Match-and-Learn-Puzzle-Challenge-api
 npm install
 ```
 
@@ -60,11 +60,21 @@ Base URL: `http://localhost:3001/api/v1`
 
 ## What "completed" means in my game
 
-[One or two sentences: when does a player count as having completed a game? For example: "A player completed the game when they answered every question, even if some answers were wrong or timed out."]
+A player completed the game when they answered every question, even if some answers were wrong or timed out.  
 
 ## Tables
 
-[List your tables, one line each, in the order of your migrations.]
+| Table | What it stores |
+|---|---|
+| `admin` | Administrator accounts (username, password hash, role) |
+| `player` | Player accounts with total score, current level and lives |
+| `level` | Game levels with difficulty, tile count and time limit |
+| `puzzle` | One puzzle per level with the number of required pairs |
+| `question` | Quiz questions and answers for each level |
+| `game_progress` | Each player's score and completion per level |
+| `users` | School accounts with school ID, email and role |
+| `game_session` | A game with its six-digit join code, start and end times |
+| `seat` | A player's seat in a game session with nickname, score and completed |
 
 ## Database scripts
 
