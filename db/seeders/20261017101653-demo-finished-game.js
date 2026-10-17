@@ -22,10 +22,10 @@ module.exports = {
     );
 
     const seats = [
-      { nickname: 'TileNinja', score: 900, completed: true },
-      { nickname: 'QuizWhiz', score: 650, completed: true },
-      { nickname: 'NewbieNora', score: 200, completed: false },
-    ];
+  { nickname: 'TileNinja',  score: 900, completed: true },
+  { nickname: 'QuizWhiz',   score: 650, completed: true },
+  { nickname: 'NewbieNora', score: 500, completed: true },
+];
 
     await queryInterface.bulkInsert(
       'seat',
