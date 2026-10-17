@@ -6,11 +6,10 @@ module.exports = {
     const start = new Date(now.getTime() - 30 * 60 * 1000);
 
     await queryInterface.bulkInsert('users', [
-      { school_id: '2023-0001', full_name: 'Demo Student One', created_at: now },
-      { school_id: '2023-0002', full_name: 'Demo Student Two', created_at: now },
-      { school_id: '2023-0003', full_name: 'Demo Student Three', created_at: now },
-    ]);
-
+  { school_id: '2023-0001', full_name: 'Demo Student One',   email: 'student1@example.com', role: 'STUDENT', created_at: now },
+  { school_id: '2023-0002', full_name: 'Demo Student Two',   email: 'student2@example.com', role: 'STUDENT', created_at: now },
+  { school_id: '2023-0003', full_name: 'Demo Student Three', email: 'student3@example.com', role: 'STUDENT', created_at: now },
+]);
     await queryInterface.bulkInsert('game_session', [
       { session_code: '482915', status: 'CLOSED', started_at: start, ended_at: now },
     ]);
