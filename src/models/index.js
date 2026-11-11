@@ -11,12 +11,26 @@ const sequelize = new Sequelize(
   dbConfig
 );
 
-// Week 11: load your models here, one line each, then add their associations.
-// Example:
-//   const User = require('./user')(sequelize, DataTypes);
-//   const Player = require('./player')(sequelize, DataTypes);
-//   User.hasMany(Player, { foreignKey: 'user_id' });
-//   Player.belongsTo(User, { foreignKey: 'user_id' });
+// Load every model here, one line each.
+const User = require('./user')(sequelize, DataTypes);
+const Level = require('./level')(sequelize, DataTypes);
+const GameSession = require('./game-session')(sequelize, DataTypes);
+const Seat = require('./seat')(sequelize, DataTypes);
 
+// Associations = the relationship lines of the ERD, read in both directions.
+User.hasMany(Level, { foreignKey: 'host_id' });
+Level.belongsTo(User, { foreignKey: 'host_id', as: 'host' });
 
-module.exports = { sequelize, Sequelize, DataTypes };
+User.hasMany(GameSession, { foreignKey: 'host_id' });
+GameSession.belongsTo(User, { foreignKey: 'host_id', as: 'host' });
+
+Level.hasMany(GameSession, { foreignKey: 'level_id' });
+GameSession.belongsTo(Level, { foreignKey: 'level_id' });
+
+GameSession.hasMany(Seat, { foreignKey: 'session_id' });
+Seat.belongsTo(GameSession, { foreignKey: 'session_id' });
+
+User.hasMany(Seat, { foreignKey: 'user_id' });
+Seat.belongsTo(User, { foreignKey: 'user_id' });
+
+module.exports = { sequelize, Sequelize, DataTypes, User, Level, GameSession, Seat };
