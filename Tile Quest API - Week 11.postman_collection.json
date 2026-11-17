@@ -840,6 +840,39 @@
       "response": []
     },
     {
+      "name": "28 Join a closed game",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player2}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"nickname\": \"LateJoiner\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}/players",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}",
+            "players"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "22 Create a level for a game",
       "event": [
         {
@@ -961,6 +994,125 @@
           "path": [
             "levels",
             "{{setId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "25 Player cannot start a game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 403\", function () {\r\n  pm.response.to.have.status(403);\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "26 Code is not six digits",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/sessions/123",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "123"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "27 Code no game uses",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 404\", function () {\r\n  pm.response.to.have.status(404);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/sessions/100000",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "100000"
           ]
         }
       },
