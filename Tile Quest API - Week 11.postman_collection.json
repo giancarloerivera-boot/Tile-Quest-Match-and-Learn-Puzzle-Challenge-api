@@ -500,6 +500,471 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "14 Start a game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.collectionVariables.set(\"code\", pm.response.json().code);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"max_players\": 10 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "15 Read a game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "18 Join a game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.collectionVariables.set(\"playerId\", pm.response.json().player_id);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"nickname\": \"TileNora\" } ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}/players",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}",
+            "players"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "19 Rejoin the same seat",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});\r\npm.test(\"same seat as the first join\", function () {\r\n  pm.expect(pm.response.json().player_id).to.eql(Number(pm.collectionVariables.get(\"playerId\")));\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"nickname\": \"TileNora\" } ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}/players",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}",
+            "players"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "20 Nickname taken",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player2}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"nickname\": \"TileNora\" }  ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}/players",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}",
+            "players"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "21 Nickname too short",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 400\", function () {\r\n  pm.response.to.have.status(400);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{player2}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"nickname\": \"a\" }  ",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}/players",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}",
+            "players"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "16 Close the game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 200\", function () {\r\n  pm.response.to.have.status(200);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"status\": \"CLOSED\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "17 Closed game cannot change",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"status\": \"CLOSED\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions/{{code}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions",
+            "{{code}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "22 Create a level for a game",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});\r\npm.collectionVariables.set(\"setId\", pm.response.json().id);"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"levelNumber\", Math.floor(Math.random() * 900) + 100);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"level_number\": {{levelNumber}}, \"difficulty\": \"Easy\" }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/levels",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "levels"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "23 Start a game on a level",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 201\", function () {\r\n  pm.response.to.have.status(201);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"level_id\": {{setId}} }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/sessions",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "sessions"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "24 Level in use",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"status is 409\", function () {\r\n  pm.response.to.have.status(409);\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "X-Demo-User",
+            "value": "{{host}}"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/levels/{{setId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "levels",
+            "{{setId}}"
+          ]
+        }
+      },
+      "response": []
     }
   ],
   "variable": [
@@ -525,6 +990,18 @@
     },
     {
       "key": "levelNumber",
+      "value": ""
+    },
+    {
+      "key": "code",
+      "value": ""
+    },
+    {
+      "key": "player2",
+      "value": ""
+    },
+    {
+      "key": "playerId",
       "value": ""
     }
   ]
