@@ -1,5 +1,5 @@
 const levelRepository = require('../repositories/level.repository');
-const { notFound, forbidden } = require('../errors/app-error');
+const { notFound, forbidden, conflict } = require('../errors/app-error');
 
 async function findOrFail(id) {
   const level = await levelRepository.findById(id);
@@ -35,7 +35,15 @@ async function update(id, changes, user) {
 async function remove(id, user) {
   const level = await findOrFail(id);
   if (!isOwner(level, user)) throw forbidden('This level belongs to another host.');
-  await levelRepository.remove(level);
+  try {
+    await levelRepository.remove(level);
+  } catch (error) {
+    // ON DELETE RESTRICT: PostgreSQL answers with code 23001 when a game still uses this level.
+    if (error.parent && error.parent.code === '23001') {
+      throw conflict('LEVEL_IN_USE', 'This level is used by a game and cannot be deleted.');
+    }
+    throw error;
+  }
 }
 
 module.exports = { list, get, create, update, remove };
