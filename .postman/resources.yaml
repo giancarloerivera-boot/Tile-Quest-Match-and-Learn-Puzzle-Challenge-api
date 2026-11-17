@@ -2,6 +2,10 @@
 workspace:
   id: c7e78bb2-9107-4ab6-8b2c-e80b4da977d8
 
+cloudResources:
+  collections:
+    ../postman/collections/Tile Quest API - Week 11: b9e7862a-78d3-4a89-916e-dd20443f50a7
+
 # All resources in the `postman/` folder are automatically registered in Local View.
 # Point to additional files outside the `postman/` folder to register them individually. Example:
 #localResources:

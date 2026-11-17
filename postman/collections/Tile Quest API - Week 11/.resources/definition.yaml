@@ -1,0 +1,9 @@
+$kind: collection
+description: ""
+variables:
+  baseUrl: http://localhost:3001/api/v1
+  host: 2099-0001
+  otherHost: 2099-0003
+  player: 2099-0002
+  setId: ""
+  levelNumber: ""
