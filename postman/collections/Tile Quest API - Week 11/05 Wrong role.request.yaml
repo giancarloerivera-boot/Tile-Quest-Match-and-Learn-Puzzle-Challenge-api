@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{baseUrl}}/levels"
+method: GET
+headers:
+  X-Demo-User: "{{player}}"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("status is 403", function () {
+        pm.response.to.have.status(403);
+      });
+    language: text/javascript
+order: 5000

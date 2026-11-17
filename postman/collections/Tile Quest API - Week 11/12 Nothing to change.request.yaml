@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{baseUrl}}/levels/{{setId}}"
+method: PATCH
+headers:
+  X-Demo-User: "{{host}}"
+  Content-Type: application/json
+body:
+  type: json
+  content: "{ }"
+scripts:
+  - type: afterResponse
+    code: |-
+      pm.test("status is 400", function () {
+        pm.response.to.have.status(400);
+      });
+    language: text/javascript
+order: 12000
