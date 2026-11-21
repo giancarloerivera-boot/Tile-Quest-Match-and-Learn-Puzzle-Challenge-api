@@ -5,5 +5,8 @@ variables:
   host: 2099-0001
   otherHost: 2099-0003
   player: 2099-0002
+  player2: 2099-0004
   setId: ""
   levelNumber: ""
+  code: ""
+  playerId: ""
